@@ -10,7 +10,6 @@ int main()
 
 	printf("Enter number for finding factorial: ");			// Input number 
 	scanf("%d", &num);
-
 	// The result will be stored in reverse order to accomodate carry as new digit easily
 	while(i <= num)			// i goes from i = 2 to i = n
 	{
@@ -29,7 +28,6 @@ int main()
 		}
 		i++;		// Incrementing value of i
 	} 		
-
 	printf("The factorial of %d is: ", num);
 	for(int j = size - 1; j >= 0; j--)			// To print factorial of the number
 		printf("%d", result[j]);
