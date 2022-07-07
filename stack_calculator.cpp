@@ -29,8 +29,7 @@ int main()
     scanf("%s", expression);
 
     expression[n - 1] = '#';       // Placing # at the end of the expression
-    top_oprtr_stk++;
-    oprtr_stack[top_oprtr_stk] = '$';       // Placing $ on top = 0 in oprtr_stack
+    oprtr_stack[++top_oprtr_stk] = '$';       // Placing $ on top = 0 in oprtr_stack
 
     while(i < n)        // Loops till i is less than n
     {
@@ -61,8 +60,7 @@ int main()
                 }    
                 i++;   
             }
-            top_oprnd_stk++;         // The top of oprnd stack is incremented
-            oprnd_stack[top_oprnd_stk] = result;       // The float number is stored in the oprnd stack
+            oprnd_stack[++top_oprnd_stk] = result;       // The float number is stored in the oprnd stack
         }
         else           // When a operator is scanned
         {
@@ -73,13 +71,9 @@ int main()
                 while(oprtr_stack[top_oprtr_stk] != '(')        // All operators inside bracket are popped and evaluated
                 { 
                     float current_oprnd;
-                    current_oprnd = oprnd_stack[top_oprnd_stk];
-                    top_oprnd_stk--;
-                    eval_result = evaluation(oprnd_stack[top_oprnd_stk], current_oprnd, oprtr_stack[top_oprtr_stk]); 
-                    top_oprnd_stk--;        
-                    top_oprtr_stk--;
-                    top_oprnd_stk++;        
-                    oprnd_stack[top_oprnd_stk] = eval_result;
+                    current_oprnd = oprnd_stack[top_oprnd_stk--];
+                    eval_result = evaluation(oprnd_stack[top_oprnd_stk--], current_oprnd, oprtr_stack[top_oprtr_stk--]);       
+                    oprnd_stack[++top_oprnd_stk] = eval_result;
                 }
                 top_oprtr_stk--;        // To pop '(' from the stack
                 i++;
@@ -90,16 +84,11 @@ int main()
                 while(out_stack_operator_precedence(scanned_oprtr) <= in_stack_operator_precedence(oprtr_stack[top_oprtr_stk]))         
                 {   
                     float current_oprnd;
-                    current_oprnd = oprnd_stack[top_oprnd_stk];
-                    top_oprnd_stk--;
-                    eval_result = evaluation(oprnd_stack[top_oprnd_stk], current_oprnd, oprtr_stack[top_oprtr_stk]); 
-                    top_oprnd_stk--;        
-                    top_oprtr_stk--;
-                    top_oprnd_stk++;        
-                    oprnd_stack[top_oprnd_stk] = eval_result;                        
-                }          
-                top_oprtr_stk++;         
-                oprtr_stack[top_oprtr_stk] = scanned_oprtr;     
+                    current_oprnd = oprnd_stack[top_oprnd_stk--];
+                    eval_result = evaluation(oprnd_stack[top_oprnd_stk--], current_oprnd, oprtr_stack[top_oprtr_stk--]);       
+                    oprnd_stack[++top_oprnd_stk] = eval_result;                        
+                }                   
+                oprtr_stack[++top_oprtr_stk] = scanned_oprtr;     
                 i++;
             }    
         }
