@@ -43,9 +43,8 @@ int main()
 
     return 0;
 }
-
+//End of main()
 // Function definitions
-
 void number_parts(long long int num, long long int *num_parts)            // To make segments of 9 digits of both numbers
 {
     num_parts[0] = num / 1000000000;
