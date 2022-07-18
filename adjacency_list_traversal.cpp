@@ -15,10 +15,13 @@ void print_list(struct node *);
 int main()
 {
 	struct node *head;
-	int no_of_vertices, label, choice, input;
+	int no_of_vertices, no_of_edges, label, choice, vertice1, vertice2;
 
 	printf("Enter the number of vertices in the graph: ");		// Input of number of vertices in graph
 	scanf("%d", &no_of_vertices);
+
+	printf("Enter the total number of edges in the graph: ");			// Input of number of edges in graph
+	scanf("%d", &no_of_edges);
 
 	head = (struct node *)malloc(sizeof(struct node) * no_of_vertices);		// Dynamic memory allocation of head array of type struct node
 
@@ -32,19 +35,12 @@ int main()
 	for(int i = 0; i < no_of_vertices; i++)			// To print the array containing head pointers
 		print_list(&head[i]);
 
-	for(int i = 0; i < no_of_vertices; i++)			// To add nodes to head pointers
+	for(int i = 0; i < no_of_edges; i++)			// To add nodes to head pointers
 	{
-		printf("For vertice %d.\tEnter 1 to enter a node. 0 to stop.");		// Used as counter in while condition. Acc. to this value, a node will be added or not to a vertice
-		scanf("%d", &choice);
-		
-		while(choice)
-		{
-			printf("Enter node for vertice %d: ", i);		// To get input of node to be added
-			scanf("%d", &input);
-			add_node_at_end(&head[i], input);		// Adds node to the vertice
-			printf("Enter 1 to enter a node. 0 to stop.");		// Input of choice(counter to while condition)
-			scanf("%d", &choice);	
-		}
+		printf("Enter vertices which are connected by an edge: ");
+		scanf("%d %d", &vertice1, &vertice2);
+		add_node_at_end(head[vertice1], vertice2);
+		add_node_at_end(head[vertice2] , vertice1);
 	}
 
 	for(int i = 0; i < no_of_vertices; i++)			// To print the array containing head pointers
