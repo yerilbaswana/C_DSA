@@ -4,80 +4,70 @@
 
 struct node 
 {
-	int vertices;
-	struct node *next;
+    int vertex;
+    struct node *next;
 };
 
 // Function declarations
-void add_node_at_end(struct node *, int);
-void print_list(struct node *);
+void add_node_at_front(struct node **, int);
+void print_list(struct node **);
 
 int main()
 {
-	struct node *head;
-	int no_of_vertices, no_of_edges, label, choice, vertice1, vertice2;
+    struct node *adj_list, **adj_list_ptr;
+    int no_of_vertices, no_of_edges, vertice1, vertice2;
 
-	printf("Enter the number of vertices in the graph: ");		// Input of number of vertices in graph
-	scanf("%d", &no_of_vertices);
+    printf("Enter the number of vertices in the graph: ");      // Input of number of vertices in graph
+    scanf("%d", &no_of_vertices);
 
-	printf("Enter the total number of edges in the graph: ");			// Input of number of edges in graph
-	scanf("%d", &no_of_edges);
+    printf("Enter the total number of edges in the graph: ");           // Input of number of edges in graph
+    scanf("%d", &no_of_edges);
 
-	head = (struct node *)malloc(sizeof(struct node) * no_of_vertices);		// Dynamic memory allocation of head array of type struct node
+    adj_list = (struct node *)malloc(sizeof(struct node) * no_of_vertices); 
+    *adj_list_ptr = (struct node *)malloc(sizeof(struct node));
 
-	for(int i = 0; i < no_of_vertices; i++)		// To store head and label of each vertice in the graph
-	{
-		printf("Enter the label of vertice %d: ", i+1);		// Input of label of graph
-		scanf("%d", &label);
-		add_node_at_end(&head[i], label);		// To store label of graph
-	}
+    adj_list_ptr = &adj_list;
 
-	for(int i = 0; i < no_of_vertices; i++)			// To print the array containing head pointers
-		print_list(&head[i]);
+    for(int i = 0; i < no_of_vertices; i++)
+    {
+        add_node_at_front(&adj_list_ptr[i], i);
+    }
 
-	for(int i = 0; i < no_of_edges; i++)			// To add nodes to head pointers
-	{
-		printf("Enter vertices which are connected by an edge: ");
-		scanf("%d %d", &vertice1, &vertice2);
-		add_node_at_end(head[vertice1], vertice2);
-		add_node_at_end(head[vertice2] , vertice1);
-	}
+    for(int i = 0; i < no_of_edges; i++)
+    {
+        printf("Enter the edges connected by an edge");
+        scanf("%d %d", &vertice1, &vertice2);
+        add_node_at_front(&adj_list_ptr[vertice1], vertice2);
+    }
 
-	for(int i = 0; i < no_of_vertices; i++)			// To print the array containing head pointers
-	{
-		print_list(&head[i]);
-		printf("\n");
-	}
+    for(int i = 0; i < no_of_vertices; i++)
+        print_list(&adj_list_ptr[i]);
 
-	return 0;
+    return 0;
 }
 
 // Function definitions
 
-void add_node_at_end(struct node *head, int input)
+void add_node_at_front(struct node **head, int value)
 {
-	struct node *temp;
-	temp = (struct node *)malloc(sizeof(struct node));
+    struct node *temp;
+    temp = (struct node *)malloc(sizeof(struct node));
 
-	temp->vertices = input;
-	temp->next = NULL;
+    temp->vertex = value;
+    temp->next = NULL;
 
-	if(head == NULL)
-		head = temp;
+    if(*head != NULL)
+        temp->next = *head;
 
-	else
-	{
-		while(head->next != NULL)
-			head = head->next;
-		head->next = temp;
-	}
+    *head = temp;
 }
 
-void print_list(struct node *head)		// To print the list
+void print_list(struct node **head)      // To print the list
 {
-	while(head != NULL)
-	{
-		printf("%d", head->vertices);
-		head = head->next;
-	}
+    while(*head != NULL)
+    {
+        printf("%d", (*head)->vertex);
+        *head = (*head)->next;
+    }
 }
+
