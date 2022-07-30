@@ -103,14 +103,14 @@ struct node *addition(struct node *result)			// To add the terms with same expon
 
 	while(temp2->next != NULL)
 	{
-		temp = temp2->next;
-		while(temp != NULL)
+		temp = temp2;
+		while(temp->next != NULL)
 		{
-			if(temp2->expnt == temp->expnt)
+			if(temp2->expnt == temp->next->expnt)
 			{
-				temp3 = temp;
-				temp2->coef = temp2->coef + temp->coef;
-				temp = temp->next;
+				temp3 = temp->next;
+				temp2->coef = temp2->coef + temp->next->coef;
+				temp->next = temp->next->next;
 				free(temp3);
 				temp = temp->next;
 			}
