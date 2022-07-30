@@ -100,18 +100,18 @@ struct node *addition(struct node *result)			// To add the terms with same expon
 {
 	struct node *temp, *temp2, *temp3;
 	temp = result;
-	temp2 = result->next;
+	temp2 = result;
 
-	while(temp2 != NULL)
+	while(temp2->next != NULL)
 	{
-		temp = result->next;
+		temp = temp2->next;
 		while(temp != NULL)
 		{
-			if(temp2->expnt == temp->next->expnt)
+			if(temp2->expnt == temp->expnt)
 			{
-				temp3 = temp->next;
-				temp2->coef = temp2->coef + temp->next->coef;
-				temp->next = temp->next->next;
+				temp3 = temp;
+				temp2->coef = temp2->coef + temp->coef;
+				temp = temp->next;
 				free(temp3);
 				temp = temp->next;
 			}
@@ -123,11 +123,11 @@ struct node *addition(struct node *result)			// To add the terms with same expon
 	return result;
 }
 
-void print_list(struct node *result)			// To print the list
+void print_list(struct node *poly)			// To print the list
 {
 	struct node *temp;
 	temp = (struct node *)malloc(sizeof(struct node));
-	temp = result;
+	temp = poly;
 
 	while(temp != NULL)
 	{
