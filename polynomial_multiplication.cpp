@@ -99,7 +99,6 @@ struct node *multiplication(struct node *poly1, struct node *poly2, struct node 
 struct node *addition(struct node *result)			// To add the terms with same exponent
 {
 	struct node *temp, *temp2, *temp3;
-	temp = result;
 	temp2 = result;
 
 	while(temp2->next != NULL)
