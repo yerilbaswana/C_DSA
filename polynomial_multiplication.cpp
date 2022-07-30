@@ -11,7 +11,7 @@ struct node
 // Function declarations
 struct node *add_term_at_end(struct node *, int, int);
 struct node *multiplication(struct node *, struct node *, struct node *);
-struct node *addition(struct node *);
+void addition(struct node *);
 void print_list(struct node *);
 
 int main()
@@ -92,11 +92,11 @@ struct node *multiplication(struct node *poly1, struct node *poly2, struct node 
 		temp2 = poly2;
 		poly1 = poly1->next;
 	}
-	result = addition(result);		// ******ISSUE: The whole list isn't sent in this case as well and in the return statement as well.
+	addition(result);		// ******ISSUE: The whole list isn't sent in this case as well and in the return statement as well.
 	return result;
 }
 
-struct node *addition(struct node *result)			// To add the terms with same exponent
+void addition(struct node *result)			// To add the terms with same exponent
 {
 	struct node *temp, *temp2, *temp3;
 	temp2 = result;
@@ -119,7 +119,6 @@ struct node *addition(struct node *result)			// To add the terms with same expon
 		}
 		temp2 = temp2->next;
 	}
-	return result;
 }
 
 void print_list(struct node *poly)			// To print the list
