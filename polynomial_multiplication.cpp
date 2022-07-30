@@ -90,7 +90,7 @@ struct node *multiplication(struct node *poly1, struct node *poly2, struct node 
 			temp2 = temp2->next;
 		}
 		temp2 = poly2;
-		poly1 = poly1->next;
+		temp = temp->next;
 	}
 	addition(result);		// ******ISSUE: The whole list isn't sent in this case as well and in the return statement as well.
 	return result;
