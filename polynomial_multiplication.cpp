@@ -42,7 +42,7 @@ int main()
 	printf("\n");
 	print_list(poly2);
 
-	result = multiplication(poly1, poly2, result);			// Product of poly1 and poly2. Stored in result.
+	result = multiplication(poly1, poly2);			// Product of poly1 and poly2. Stored in result.
 
 	printf("The product of the two polynomials is:\n");
 	print_list(result);
@@ -74,10 +74,10 @@ struct node *add_term_at_end(struct node *poly, int coefficient, int exponent)		
 
 struct node *multiplication(struct node *poly1, struct node *poly2, struct node *result)		// Product of poly1 and poly2. Stored in result.
 {
-	struct node *temp, *temp2, *temp3;
+	struct node *temp, *temp2, *result;
 	temp = poly1;
 	temp2 = poly2;
-	temp3 = result;
+	result = NULL;
 	int coefficient, exponent;
 
 	while(temp != NULL)
