@@ -10,7 +10,7 @@ struct node
 
 // Function declarations
 struct node *add_term_at_end(struct node *, int, int);
-struct node *multiplication(struct node *, struct node *, struct node *);
+struct node *multiplication(struct node *, struct node *);
 void addition(struct node *);
 void print_list(struct node *);
 
@@ -72,7 +72,7 @@ struct node *add_term_at_end(struct node *poly, int coefficient, int exponent)		
 	return poly; 
 }
 
-struct node *multiplication(struct node *poly1, struct node *poly2, struct node *result)		// Product of poly1 and poly2. Stored in result.
+struct node *multiplication(struct node *poly1, struct node *poly2)		// Product of poly1 and poly2. Stored in result.
 {
 	struct node *temp, *temp2, *result;
 	temp = poly1;
