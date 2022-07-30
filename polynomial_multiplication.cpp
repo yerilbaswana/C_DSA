@@ -39,6 +39,7 @@ int main()
 		scanf("%d", &choice);		// Input of polynomial number, coefficient and exponent.
 	}
 	print_list(poly1);
+	printf("\n");
 	print_list(poly2);
 
 	result = multiplication(poly1, poly2, result);			// Product of poly1 and poly2. Stored in result.
@@ -60,71 +61,80 @@ struct node *add_term_at_end(struct node *poly, int coefficient, int exponent)		
 	temp->next = NULL;
 
 	if(poly == NULL)
-		poly = temp;
-	else
-	{
-		while(poly->next != NULL)
-			poly = poly->next;
+		return temp;
+	
+	struct node *temp2;	
+	temp2 = poly;
+	while(temp2->next != NULL)
+		temp2 = temp2->next;
 
-		poly->next = temp;
-	} 
-	return poly;
+	temp2->next = temp;
+	return poly; 
 }
 
 struct node *multiplication(struct node *poly1, struct node *poly2, struct node *result)		// Product of poly1 and poly2. Stored in result.
 {
-	struct node *temp;
-	temp = (struct node *)malloc(sizeof(struct node));
-	temp = poly2;
+	struct node *temp, *temp2, *temp3;
+	temp = poly1;
+	temp2 = poly2;
+	temp3 = result;
 	int coefficient, exponent;
 
-	while(poly1 != NULL)
+	while(temp != NULL)
 	{
-		while(poly2 != NULL)
+		while(temp2 != NULL)
 		{
-			coefficient = poly1->coef * poly2->coef;
-			exponent = poly1->expnt + poly2->expnt;
+			coefficient = temp->coef * temp2->coef;
+			exponent = temp->expnt + temp2->expnt;
 			result = add_term_at_end(result, coefficient, exponent);
-			poly2 = poly2->next;
+			temp2 = temp2->next;
 		}
-		poly2 = temp;
+		temp2 = poly2;
 		poly1 = poly1->next;
 	}
-	result = addition(result);
+	result = addition(result);		// ******ISSUE: The whole list isn't sent in this case as well and in the return statement as well.
 	return result;
 }
 
 struct node *addition(struct node *result)			// To add the terms with same exponent
 {
-	struct node *temp, *temp2;
-	temp = (struct node *)malloc(sizeof(struct node));
+	struct node *temp, *temp2, *temp3;
 	temp = result;
+	temp2 = result->next;
 
-	while(result->next != NULL)
+	while(temp2 != NULL)
 	{
-		temp = result;
-		while(temp->next != NULL)
+		temp = result->next;
+		while(temp != NULL)
 		{
-			if(result->expnt == temp->next->expnt)
+			if(temp2->expnt == temp->next->expnt)
 			{
-				result->coef = result->coef + temp->next->coef;
+				temp3 = temp->next;
+				temp2->coef = temp2->coef + temp->next->coef;
 				temp->next = temp->next->next;
+				free(temp3);
 				temp = temp->next;
 			}
 			else
 				temp = temp->next;
 		}
-		result = result->next;
+		temp2 = temp2->next;
 	}
 	return result;
 }
 
 void print_list(struct node *result)			// To print the list
 {
-	while(result != NULL)
+	struct node *temp;
+	temp = (struct node *)malloc(sizeof(struct node));
+	temp = result;
+
+	while(temp != NULL)
 	{
-		printf("Coefficient - %d ", result->coef);
-		printf(" Exponent - %d\n", result->expnt);
-		result = result->next;
+		printf("%dx^", temp->coef);
+		printf("%d", temp->expnt);
+		if(temp->next != NULL)
+			printf(" + ");
+		temp = temp->next;
 	}
 }
