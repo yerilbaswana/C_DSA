@@ -21,7 +21,6 @@ int main()
 
 	poly1 = NULL;
 	poly2 = NULL;
-	result = NULL;
 	
 	printf("Enter the polynomial the term belongs to: ");
 	scanf("%d", &choice);
@@ -124,7 +123,6 @@ void addition(struct node *result)			// To add the terms with same exponent
 void print_list(struct node *poly)			// To print the list
 {
 	struct node *temp;
-	temp = (struct node *)malloc(sizeof(struct node));
 	temp = poly;
 
 	while(temp != NULL)
