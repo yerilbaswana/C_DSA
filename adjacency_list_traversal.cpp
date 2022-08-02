@@ -52,7 +52,7 @@ int main()
 }
 
 // Function definitions // *(*(adj_list + i) + 2)  
-// First element *(adj_list + i)
+// First element *(adj_list + i)->vertex
 
 struct node *add_term_at_end(struct node *head, int vertex_label)			// Adding the term at the end
 {
