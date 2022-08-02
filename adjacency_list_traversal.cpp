@@ -9,13 +9,14 @@ struct node
 };
 
 // Function declarations
-void add_node_at_front(struct node *, int);
 void print_list(struct node *);
+struct node *add_term_at_end(struct node *, int);
 
+// Start of main
 int main()
 {
     struct node **adj_list;
-    int no_of_vertices, no_of_edges, vertice1, vertice2;
+    int no_of_vertices, no_of_edges, vertex1, vertex2;
 
     printf("Enter the number of vertices in the graph: ");      // Input of number of vertices in graph
     scanf("%d", &no_of_vertices);
@@ -29,51 +30,60 @@ int main()
 
     for(int i = 0; i < no_of_vertices; i++)
     {
-    	*(adj_list + i) = NULL;
-    	*(adj_list + i)->next = NULL;
+    	*(adj_list + i) = NULL;		// Initialising all indices of array of pointers to NULL
     }
 
     for(int i = 0; i < no_of_vertices; i++)
     {
-        *adj_list[i] = add_node_at_front((*adj_list)[i], i);
+        *(adj_list + i) = add_term_at_end(*(adj_list + i), i); 			// Setting value of i as vertex
     }
 
     for(int i = 0; i < no_of_edges; i++)
     {
-        printf("Enter the edges connected by an edge");
-        scanf("%d %d", &vertice1, &vertice2);
-        add_node_at_front((*adj_list)[vertice1], vertice2);
+        printf("Enter the vertice connected by an edge");			// Input of vertice 
+        scanf("%d %d", &vertex1, &vertex2);
+        *(adj_list + vertex1) = add_term_at_end(*(adj_list + vertex1), vertex2);		// Adding vertex to adjacency list
     }
 
-    for(int i = 0; i < no_of_vertices; i++)
-        print_list((*adj_list)[i]);
+    for(int i = 0; i < no_of_vertices; i++)			// Printing all adjacency lists
+       	print_list(*(adj_list + i));
 
     return 0;
 }
 
 // Function definitions
 
-struct node *add_node_at_front(struct node *head, int value)
+struct node *add_term_at_end(struct node *head, int vertex_label)			// Adding the term at the end
 {
-    struct node *temp;
-    temp = (struct node *)malloc(sizeof(struct node));
+	struct node *temp;
+	temp = (struct node *)malloc(sizeof(struct node));
 
-    temp->vertex = value;
-    temp->next = NULL;
+	temp->vertex = vertex_label;
+	temp->next = NULL;
 
-    if(head != NULL)
-        temp->next = head;
+	if(head == NULL)		// If head is NULL then value of temp is returned
+		return temp;
+	
+	struct node *temp2;	
+	temp2 = head;
+	while(temp2->next != NULL)		// If not NULL then traverse to end of list and add the element
+		temp2 = temp2->next;
 
-    head = temp;
-
+	temp2->next = temp;
+	return head; 
 }
 
 void print_list(struct node *head)      // To print the list
 {
-    while(head != NULL)
-    {
-        printf("%d", head->vertex);
-        head = head->next;
-    }
-}
+	struct node *temp;
+	temp = head;
 
+	printf("The list for %d is:", temp->vertex);
+	temp = temp->next;
+    while(temp != NULL)
+    {
+        printf("%d", temp->vertex);
+        temp = temp->next;
+    }
+    printf("\n");
+}
