@@ -51,7 +51,7 @@ int main()
     return 0;
 }
 
-// Function definitions
+// Function definitions // *(*(adj_list + i) + 2)
 
 struct node *add_term_at_end(struct node *head, int vertex_label)			// Adding the term at the end
 {
